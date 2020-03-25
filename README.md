@@ -45,6 +45,6 @@ yarn lint
 | revert   | 执行git revert打印的message                            |
 
 ### 代码提交规范
-1. **代码不允许直接提交到master和dev，必须从dev分支checkout出你自己的分支，分支命名规范参照上边**
-2. 需求开发完成，通过创建 `pull request` 的形式，将代码合并入 `dev` 分支
+1. **代码不允许直接提交到master，必须从master分支checkout出你自己的分支，分支命名规范参照上边**
+2. 需求开发完成，通过创建 `pull request` 的形式，将代码合并入 `master` 分支
 
