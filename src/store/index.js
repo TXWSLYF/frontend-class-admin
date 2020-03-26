@@ -5,11 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    userInfo: {
+      isLogin: false,
+      name: '',
+      avatar: '',
+      role: '',
+    },
   },
   mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    setUserInfo(state, userInfo) {
+      state.userInfo = Object.assign(state.userInfo, userInfo);
+    },
   },
 });

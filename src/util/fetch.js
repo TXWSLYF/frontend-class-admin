@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 import { errorCodeType } from '@/common/constant';
+// eslint-disable-next-line import/no-cycle
+import router from '@/router/index';
 
 const { USER_NOT_LOGIN } = errorCodeType;
 
 const fetch = axios.create({
-  baseURL: '/api',
+  baseURL: '/api/admin',
   withCredentials: true,
   timeout: 20000,
   headers: {
@@ -29,7 +31,8 @@ fetch.interceptors.response.use(
       if (errorCode === USER_NOT_LOGIN) {
         setTimeout(() => {
           // TODO: 跳转地址应该由后端来决定
-          window.location = '/#/';
+          // window.location = '/#/login';
+          router.replace('/login');
         }, 1000);
       }
 
