@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <h1>前端小课后台首页</h1>
+    <h1>前端小课后台首页啊</h1>
   </div>
 </template>
 

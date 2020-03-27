@@ -6,6 +6,8 @@ addons:
 before_install:
 - openssl aes-256-cbc -K $encrypted_a65247dffca0_key -iv $encrypted_a65247dffca0_iv
   -in deploy_rsa.enc -out ./deploy_rsa -d
+script:
+  - yarn test
 before_deploy:
   - openssl rsa -in ./deploy_rsa -out ./deploy_rsa_new
   - eval "$(ssh-agent -s)"
