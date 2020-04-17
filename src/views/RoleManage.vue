@@ -1,16 +1,16 @@
 <template>
-  <div class="index">
-    <h1>前端小课后台首页啊</h1>
+    <div class="role-manage">
+    <h1>角色管理页面</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Index',
+  name: 'RoleManage',
 };
 </script>
 
 <style lang="less" scoped>
-.index {
+.role-manage{
 }
 </style>
