@@ -1,3 +1,4 @@
+// 首页已删除不用
 <template>
   <div class="index">
     <h1>前端小课后台首页啊</h1>

@@ -1,17 +1,16 @@
 <template>
-<div class="user-manage">
-    <h1>用户管理页面</h1>
+    <div class="role-manage">
+    <h1>角色管理页面</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UserManage',
+  name: 'RoleManage',
 };
 </script>
 
 <style lang="less" scoped>
-.user-manage {
-
+.role-manage{
 }
 </style>
