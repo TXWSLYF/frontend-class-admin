@@ -9,8 +9,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Index',
-    component: () => import('@/views/Index.vue'),
+    name: 'UserManage',
+    component: () => import('@/views/UserManage.vue'),
   },
   {
     path: '/login',
@@ -23,9 +23,19 @@ const routes = [
     component: () => import('@/views/UserManage.vue'),
   },
   {
-    path: '/courseProgress',
-    name: 'CourseProgress',
-    component: () => import('@/views/CourseProgress.vue'),
+    path: '/authorityManage',
+    name: 'AuthorityManage',
+    component: () => import('@/views/AuthorityManage.vue'),
+  },
+  {
+    path: '/roleManage',
+    name: 'RoleManage',
+    component: () => import('@/views/RoleManage.vue'),
+  },
+  {
+    path: '/courseEvaluation',
+    name: 'CourseEvaluation',
+    component: () => import('@/views/CourseEvaluation.vue'),
   },
 ];
 
