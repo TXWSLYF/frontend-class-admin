@@ -14,14 +14,31 @@ export const userRole = {
 
 // 菜单列表
 export const menuList = [
-  { title: '用户管理', path: '/userManage', icon: 'el-icon-location' },
   {
-    title: '数据统计',
+    title: '管理',
     icon: 'el-icon-location',
     children: [
       {
-        title: '课程进度',
-        path: '/courseProgress',
+        title: '用户管理',
+        path: '/userManage',
+      },
+      {
+        title: '项目权限管理',
+        path: '/authorityManage',
+      },
+      {
+        title: '角色管理',
+        path: '/roleManage',
+      },
+    ],
+  },
+  {
+    title: '数据分析',
+    icon: 'el-icon-location',
+    children: [
+      {
+        title: '课程评价',
+        path: '/courseEvaluation',
       },
     ],
   },
