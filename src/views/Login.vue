@@ -12,19 +12,17 @@
       </header>
       <p>前端课堂后台</p>
       <el-form
-        label-width="45px"
-        label-position="left"
         :model="{ name: name, password: password }"
         :rules="rules"
         ref="form"
       >
         <el-form-item prop="name">
-          <i slot="label" class="el-icon-user" style="font-size:20px" />
-          <el-input v-model="name" />
+          <!-- <i slot="label" class="el-icon-user" style="font-size:20px" /> -->
+          <el-input prefix-icon="el-icon-user" v-model="name" />
         </el-form-item>
         <el-form-item prop="password">
-          <i slot="label" class="el-icon-lock" style="font-size:20px" />
-          <el-input v-model="password" type="password" />
+          <!-- <i slot="label" class="el-icon-lock" style="font-size:20px" /> -->
+          <el-input prefix-icon="el-icon-lock" v-model="password" type="password" />
         </el-form-item>
       </el-form>
       <div class="btn-container">
@@ -87,9 +85,9 @@ export default {
       background: linear-gradient(60deg, #66bb6a, #388e3c);
       box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(76, 175, 80, 0.6);
       color: white;
-      margin: -40px 20px 15px;
-      border-radius: 3px;
-      padding: 20px 0;
+      margin: -50px 20px 15px;
+      border-radius: 5px;
+      padding: 10px 0;
       text-align: center;
     }
 

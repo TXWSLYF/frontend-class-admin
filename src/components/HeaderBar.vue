@@ -17,8 +17,9 @@
         </div>
       </div>
       <div slot="reference">
-        <div class="avatar">
-          <img :src="userInfo.avatar" />
+        <div class="avatar"  >
+          <div class="no-avatar" v-if="!userInfo.avatar">未登录</div>
+          <img  v-else :src="userInfo.avatar" />
           <i class="el-icon-arrow-down" />
         </div>
       </div>
@@ -61,7 +62,7 @@ header {
   justify-content: space-between;
   align-items: center;
   height: @header-height;
-  background: #545c64;
+  background: rgba(64, 158, 255,0.6);
 
   .icon-container {
     display: flex;
@@ -93,6 +94,17 @@ header {
       font-weight: bold;
       color: white;
     }
+  }
+  .avatar .no-avatar {
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    text-align:center;
+    font-size: 10px;
+    font-weight: bolder;
+    color: rgba(64, 158, 255,0.6);
+    background: white;
+    border-radius: 50%;
   }
 }
 </style>
