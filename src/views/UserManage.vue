@@ -71,8 +71,8 @@
         </ul>
       </div>
       <div class="user-info_pages">
-        <el-button icon="el-icon-arrow-left" plain></el-button>
-        <el-button plain
+        <!-- <el-button icon="el-icon-arrow-left" plain></el-button> -->
+        <el-pagination background
           @current-change="handleCurrentChange"
           @size-change="handleSizeChange"
           :current-page="pageNumber"
@@ -80,8 +80,8 @@
           :page-sizes="[1, 2, 3,]"
           :total="5"
         layout="total, sizes, prev, pager, next, jumper"
-        ></el-button>
-        <el-button icon="el-icon-arrow-right" plain></el-button>
+        ></el-pagination>
+        <!-- <el-button icon="el-icon-arrow-right" plain></el-button> -->
       </div>
     </div>
     </div>
