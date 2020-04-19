@@ -1,0 +1,153 @@
+.user-manage {
+
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    color: #464646;
+}
+
+.search-container {
+    height: 50px;
+    background-color: white;
+    font-size: 15px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.search-container_ID {
+    width: 150px;
+    margin: 0 30px;
+}
+
+.search-container_time,
+.search-container_info,
+.search-container_remark {
+    display: flex;
+    align-items: center;
+}
+
+.search-container_info {
+    width: 300px;
+    margin: 0 25px;
+}
+
+.search-container_remark {
+    width: 150px;
+    margin: 0 20px 0 0;
+}
+
+.search-container_time p{
+    min-width: 65px;
+    margin-right: 5px;
+}
+.search-container_info p {
+    min-width: 65px;
+    margin-right: 5px;
+}
+
+.search-container_remark p {
+    width: 45px;
+    margin-right: 5px;
+}
+
+.user-info_container {
+    /* min-height: 720px; */
+
+    margin-right:10px;
+    font-family: Microsoft YaHei;
+}
+
+.user-info_top-container {
+    height: 40px;
+    background-color: #E3ECF7;
+    font-size: 18px;
+    list-style:none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-info_list>li,
+.user-info_top-container>li{
+    width: 180px;
+    margin-left:20px;
+}
+
+.user-info_list-container{
+    /* min-height:720px; */
+    overflow:auto;
+}
+.user-info_list{
+    height:120px;
+    margin:0;
+    background-color: white;
+    border-bottom: 1px solid #F5F8FC;
+}
+
+/*定义了滚动条整体样式；*/
+.user-info_list-container::-webkit-scrollbar {
+    /* height: 18px !important; */
+    width: 8px !important;
+}
+
+/*定义了滚动条滑块的样式*/
+.user-info_list-container::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    border-style: dashed 1px rgb(0, 0, 0, 0.8);
+    background-color: rgba(87, 79, 84, 0.8);
+    background-clip: padding-box;
+}
+
+/*定义了轨道的样式*/
+.user-info_list-container::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(175, 163, 163, 0.8);
+    border-radius: 5px;
+    background: #EDEDED;
+}
+
+.user-info_list-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(11, 77, 121, 0.8);
+}
+
+.user-info_top_info,
+.user-info_list_info{
+    min-width:250px !important;
+}
+.user-info_top_ID,
+.user-info_list_id{
+    width:100px !important;
+    margin-left:0px !important;
+}
+.user-info_list {
+    font-size: 18px;
+    height:100%;
+    font-size: 18px;
+    list-style:none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-info_operation>p {
+    width: 60px;
+    color: #5090E5;
+    display: inline-block;
+}
+
+.user-info_list div>p {
+    height: 10px;
+}
+
+/* .user-info_operation_edit:hover{
+    color:blue;
+    cursor: pointer;
+} */
+.user-info_pages {
+    height:50px;
+    display: flex ;
+    justify-content: end;
+    align-items: center;
+}

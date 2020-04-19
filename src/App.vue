@@ -50,6 +50,7 @@ export default {
 
     > .router-container {
       width: ~'calc(100vw - @{menu-width})';
+      min-width:1280px;
       background-color: #f5f8fc;
     }
   }
