@@ -208,78 +208,78 @@ export default {
       Detail: {},
       editDetail: {},
       options: [{
-          value: '选项1',
-          label: '课程运营',
-        }, {
-          value: '选项2',
-          label: '课程管理',
-        }, {
-          value: '选项3',
-          label: '后台管理数据查看',
-        },
-        {
-          value: '选项4',
-          label: '数据查看',
-        },
+        value: '选项1',
+        label: '课程运营',
+      }, {
+        value: '选项2',
+        label: '课程管理',
+      }, {
+        value: '选项3',
+        label: '后台管理',
+      },
+      {
+        value: '选项4',
+        label: '数据查看',
+      },
       ],
       dataList: [
-            {
-                nickname: 'alex',
-                name: 'root',
-                remark: '管理员',
-                userRoles: ['超级管理员'],
-            },
-            {
-                nickname: 'alex',
-                name: 'root',
-                remark: '管理员',
-                userRoles: ['超级管理员'],
-            },
-            {
-                nickname: 'alex',
-                name: 'root',
-                remark: '管理员',
-                userRoles: ['超级管理员'],
-            },
-        ],
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
+        {
+          nickname: 'alex',
+          name: 'root',
+          remark: '管理员',
+          userRoles: ['超级管理员'],
         },
         {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
+          nickname: 'alex',
+          name: 'root',
+          remark: '管理员',
+          userRoles: ['超级管理员'],
         },
         {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
+          nickname: 'alex',
+          name: 'root',
+          remark: '管理员',
+          userRoles: ['超级管理员'],
         },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
-        },
-        ],
+      ],
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333,
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333,
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333,
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333,
+      },
+      ],
     };
   },
   created() {
-   this.getOne();
-   console.log('aaa');
+    this.getOne();
+    console.log('aaa');
   },
   methods: {
     async getOne() {
@@ -307,7 +307,7 @@ export default {
       this.showdetRightDialog(row);
     },
     async showSetRightDialog() {
-     this.addDialogVisible = true;
+      this.addDialogVisible = true;
     },
   },
 };
