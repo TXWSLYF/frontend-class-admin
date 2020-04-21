@@ -116,33 +116,33 @@
     </div>
     <!-- 管理员详情 -->
     <el-dialog title="管理员详情" center
-      :visible.sync="DetailRightDialogVisible"
+      :visible.sync="detailRightDialogVisible"
       width="50%">
-      <el-form :model="Detail" ref="editFormRef" label-width="100px">
+      <el-form :model="detail" ref="editFormRef" label-width="100px">
           <el-form-item label="管理员姓名">
-            <el-input v-model="Detail.name" disabled></el-input>
+            <el-input v-model="detail.name" disabled></el-input>
           </el-form-item>
           <el-form-item label="管理员角色">
-            <el-input v-model="Detail.roleZh" disabled></el-input>
+            <el-input v-model="detail.roleZh" disabled></el-input>
           </el-form-item>
           <el-form-item label="权限详情">
-            <el-input v-model="Detail.right" disabled></el-input>
+            <el-input v-model="detail.right" disabled></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="DetailRightDialogVisible = false" type="primary">确 定</el-button>
+          <el-button @click="detailRightDialogVisible = false" type="primary">确 定</el-button>
         </span>
     </el-dialog>
     <!-- 编辑 -->
-    <div class="EditManageDialog">
+    <div class="editManageDialog">
        <el-dialog
        title="编辑管理员"
        center
-      :visible.sync="EditDialogVisible"
+      :visible.sync="editDialogVisible"
        width="50%">
-       <el-form :model="Detail"  ref="editFormRef" label-width="100px">
+       <el-form :model="detail"  ref="editFormRef" label-width="100px">
           <el-form-item label="管理员姓名">
-            <el-input v-model="Detail.name" disabled></el-input>
+            <el-input v-model="detail.name" disabled></el-input>
           </el-form-item>
         <el-form-item label="管理员角色">
           <el-select v-model="changeRoles"
@@ -158,8 +158,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="EditDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="changeMangerRoles(Detail.name)" >确 定</el-button>
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="changeMangerRoles(detail.name)" >确 定</el-button>
       </span>
     </el-dialog>
     </div>
@@ -209,14 +209,14 @@ export default {
       page: 1,
       pageSize: 10,
       addManagerDialogVisible: false,
-      DetailRightDialogVisible: false,
-      EditDialogVisible: false,
+      detailRightDialogVisible: false,
+      editDialogVisible: false,
       deleteDialogVisible: false,
       addForm: {
         name: '',
         role: '',
       },
-      Detail: {
+      detail: {
         name: '',
         roleZh: '',
         role: '',
@@ -260,23 +260,23 @@ export default {
     },
     // 保存单独管理员的数据
     setDetail(data) {
-      this.Detail.name = data.name;
-      this.Detail.roleZh = data.userRoles[0].roleInfo.nameZh;
-      this.Detail.role = data.userRoles[0].roleInfo.name;
-      this.Detail.right = data.userRoles[0].roleInfo.desc;
+      this.detail.name = data.name;
+      this.detail.roleZh = data.userRoles[0].roleInfo.nameZh;
+      this.detail.role = data.userRoles[0].roleInfo.name;
+      this.detail.right = data.userRoles[0].roleInfo.desc;
     },
     // 详情对话框
     showDetailRightDialog(data1) {
       this.setDetail(data1);
       // this.Detail = data;
-      console.log(this.Detail);
-      this.DetailRightDialogVisible = true;
+      console.log(this.detail);
+      this.detailRightDialogVisible = true;
     },
     // 编辑对话框
     showEditRightDialog(row) {
       this.setDetail(row);
-      this.changeRoles = [this.Detail.role];
-      this.EditDialogVisible = true;
+      this.changeRoles = [this.detail.role];
+      this.editDialogVisible = true;
     },
     // 删除对话框
     showDeleteRightDialog(val) {
@@ -292,7 +292,7 @@ export default {
     changeMangerRoles(name) {
       console.log(name);
       console.log(this.changeRoles);
-      this.EditDialogVisible = false;
+      this.editDialogVisible = false;
       // 重新获取列表数据
       this.getTableList();
     },
