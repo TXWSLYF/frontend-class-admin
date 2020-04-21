@@ -15,11 +15,11 @@
               <el-button
                 size="mini"
                 type="text"
-                @click="dialogInfo = true">详情</el-button>
+                @click="dialogInfoView = true">详情</el-button>
               <el-button
                 size="mini"
                 type="text"
-                @click="dialogInfo = true">编辑</el-button>
+                @click="dialogInfoEdit = true">编辑</el-button>
               <el-button
                 size="mini"
                 type="text"
@@ -28,20 +28,34 @@
           </el-table-column>
         </el-table>
 
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="1000">
+        </el-pagination>
+
         <!-- 新增角色弹窗 -->
         <DialogInfo :flag.sync="dialogInfo" title="新增角色" :authorities="authorities"/>
+        <!-- 编辑角色弹窗 -->
+        <DialogInfoEdit :flag.sync="dialogInfoEdit" title="编辑角色" :authorities="authorities"/>
+        <!-- 查看角色弹窗 -->
+        <DialogInfoView :flag.sync="dialogInfoView" title="角色详情"/>
       </main>
     </div>
 </template>
 
 <script>
 import DialogInfo from '@/components/DialogInfo.vue';
+import DialogInfoEdit from '@/components/DialogInfoEdit.vue';
+import DialogInfoView from '@/components/DialogInfoView.vue';
 import { roleList, authorityList } from '@/api/role';
 
 export default {
   name: 'RoleManage',
   components: {
     DialogInfo,
+    DialogInfoEdit,
+    DialogInfoView,
   },
   mounted() {
     this.getRoleList();
@@ -76,6 +90,8 @@ export default {
         },
       ],
       dialogInfo: false,
+      dialogInfoEdit: false,
+      dialogInfoView: false,
     };
   },
   methods: {
@@ -140,4 +156,8 @@ export default {
 // .el-select {
 //   display: block;
 // }
+
+.el-pagination {
+  float: right;
+}
 </style>

@@ -2,23 +2,18 @@
   <el-dialog :title="title" :visible.sync="dialogInfoFlag" @close="close" center>
     <el-form :model="form">
       <el-form-item label="角色名称" :label-width="formLabelWidth">
-        <el-input v-model="form.roleName" auto-complete="off"></el-input>
+        <el-input v-model="form.roleName" auto-complete="off" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="角色拥有者" :label-width="formLabelWidth">
+        <el-input v-model="form.userName" auto-complete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="权限详情" :label-width="formLabelWidth">
-        <el-select v-model="form.authorities" multiple placeholder="请选择" style="display: block">
-          <el-option
-            v-for="item in authorities"
-            :key="item.id"
-            :label="item.nameZh"
-            :value="item.nameZh">
-          </el-option>
-        </el-select>
+        <el-input v-model="form.authorities" auto-complete="off" :disabled="true"></el-input>
       </el-form-item>
       <!-- <slot></slot> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dialogInfoFlag = false">确 定</el-button>
-      <el-button @click="dialogInfoFlag = false">取 消</el-button>
     </div>
   </el-dialog>
 </template>
@@ -36,10 +31,6 @@ export default {
       type: String,
       default: '222',
     },
-    authorities: {
-      type: Array,
-      default: () => [],
-    },
   },
   watch: {
     flag: {
@@ -54,6 +45,7 @@ export default {
       form: {
         roleName: '',
         authorities: '',
+        userName: '',
       },
       formLabelWidth: '120px',
     };

@@ -2,7 +2,7 @@
   <el-dialog :title="title" :visible.sync="dialogInfoFlag" @close="close" center>
     <el-form :model="form">
       <el-form-item label="角色名称" :label-width="formLabelWidth">
-        <el-input v-model="form.roleName" auto-complete="off"></el-input>
+        <el-input v-model="form.roleName" auto-complete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="权限详情" :label-width="formLabelWidth">
         <el-select v-model="form.authorities" multiple placeholder="请选择" style="display: block">
