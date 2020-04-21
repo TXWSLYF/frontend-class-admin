@@ -3,7 +3,7 @@
       <div class="authority-manage_title">
       <span>项目权限管理</span>
       <el-button class="authority-manage_button"
-      @click="showSetRightDialog"
+      @click="showAddManagerDialog"
       type="primary">
       新增管理员
       </el-button>
@@ -12,30 +12,37 @@
       <!-- 搜索姓名 -->
       <div>
         <el-input
-          placeholder="姓名"
+          placeholder="昵称"
           class="name_search"
           @change="handleName"
-          v-model="inputValue1">
+          v-model="inputName">
            <i slot="suffix" class="el-input__icon el-icon-search pointer" @click="handleName"></i>
         </el-input>
         <span class="role">管理员角色</span>
-        <el-select v-model="value1"
+        <el-select v-model="selectRoles"
           class="roles_search"
+          @change="handleRoles"
            multiple placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              :key="item.id"
+              :label="item.nameZh"
+              :value="item.name">
             </el-option>
         </el-select>
       </div>
         <div>
-          <el-button class="authority-manage_button" type="primary">查询</el-button>
-          <el-button class="authority-manage_button" type="primary">重置</el-button>
+          <el-button
+            class="authority-manage_button"
+            type="primary"
+            @click="handleRoles">查询</el-button>
+          <el-button
+            class="authority-manage_button"
+            type="primary"
+            @click="resetTableList">重置</el-button>
         </div>
     </div>
-    <!-- 索引目录 -->
+    <!-- 数据表单 -->
     <div class="authority-manage_item">
       <el-table
         :header-cell-style="{padding:'4px',background:'#E3ECF7'}"
@@ -52,24 +59,28 @@
           label="管理员角色"
           width="300">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.address }}</span>
+            <span style="margin-left: 10px">{{ scope.row.userRoles[0].roleInfo.nameZh }}</span>
           </template>
         </el-table-column>
         <el-table-column
           label="权限情况"
           width="500">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.city }}</span>
+            <span style="margin-left: 10px">{{ scope.row.userRoles[0].roleInfo.desc }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">详情</el-button>
+            <el-button
+            @click="showDetailRightDialog(scope.row)"
+            type="text" size="small">详情</el-button>
               <el-button
               @click="showEditRightDialog(scope.row)"
               type="text" size="small"
               >编辑</el-button>
-                <el-button @click="showDeleteRightDialog" type="text" size="small">删除</el-button>
+                <el-button
+                @click="showDeleteRightDialog(scope.row)"
+                type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,78 +90,76 @@
        <el-dialog
        title="新增管理员"
        center
-      :visible.sync="addDialogVisible"
-       width="50%"
-       @close="setRightDialogClosed">
+      :visible.sync="addManagerDialogVisible"
+       width="50%">
        <el-form :model="addForm"  ref="addFormRef" label-width="100px">
-        <el-form-item label="管理员姓名" prop="username">
-          <el-input v-model="addForm.username" placeholder="请输入姓名" style="width:400px"></el-input>
+        <el-form-item label="管理员姓名">
+          <el-input v-model="addForm.name" placeholder="请输入姓名" style="width:400px"></el-input>
         </el-form-item>
         <el-form-item label="管理员角色">
           <el-select v-model="addForm.role" style="width:400px"
            multiple placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+                :key="item.id"
+                :label="item.nameZh"
+                :value="item.name">
             </el-option>
         </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" >确 定</el-button>
+        <el-button @click="addManagerDialogVisible = false">取 消</el-button>
+        <el-button @click="addManager" type="primary" >确 定</el-button>
       </span>
     </el-dialog>
     </div>
     <!-- 管理员详情 -->
     <el-dialog title="管理员详情" center
-      :visible.sync="ManageDetDialogVisible"
-      width="50%"
-      @close="setRoleDialogClosed">
+      :visible.sync="DetailRightDialogVisible"
+      width="50%">
       <el-form :model="Detail" ref="editFormRef" label-width="100px">
           <el-form-item label="管理员姓名">
             <el-input v-model="Detail.name" disabled></el-input>
           </el-form-item>
           <el-form-item label="管理员角色">
-            <el-input v-model="Detail.address" disabled></el-input>
+            <el-input v-model="Detail.roleZh" disabled></el-input>
           </el-form-item>
           <el-form-item label="权限详情">
-            <el-input v-model="Detail.city" disabled></el-input>
+            <el-input v-model="Detail.right" disabled></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="ManageDetDialogVisible = false" type="primary">确 定</el-button>
+          <el-button @click="DetailRightDialogVisible = false" type="primary">确 定</el-button>
         </span>
     </el-dialog>
     <!-- 编辑 -->
     <div class="EditManageDialog">
        <el-dialog
-       title="新增管理员"
+       title="编辑管理员"
        center
       :visible.sync="EditDialogVisible"
-       width="50%"
-       @close="setRightDialogClosed">
-       <el-form :model="editDetail"  ref="editFormRef" label-width="100px">
+       width="50%">
+       <el-form :model="Detail"  ref="editFormRef" label-width="100px">
           <el-form-item label="管理员姓名">
-            <el-input v-model="editDetail.name" disabled></el-input>
+            <el-input v-model="Detail.name" disabled></el-input>
           </el-form-item>
         <el-form-item label="管理员角色">
-          <el-select v-model="value2" style="width:400px"
-           multiple placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
+          <el-select v-model="changeRoles"
+            style="width:400px"
+            multiple placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.nameZh"
+                :value="item.name">
+              </el-option>
         </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="EditDialogVisible = false">取 消</el-button>
-        <el-button type="primary" >确 定</el-button>
+        <el-button type="primary" @click="changeMangerRoles(Detail.name)" >确 定</el-button>
       </span>
     </el-dialog>
     </div>
@@ -160,10 +169,10 @@
       :visible.sync="deleteDialogVisible"
       width="30%"
       center>
-      <span>确认要删除信息吗？</span>
+      <span>确认要删除管理员{{ managerName }}的信息吗？</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="deleteDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="deleteDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="deleteManager(managerName)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 分页  -->
@@ -180,134 +189,154 @@
       layout="prev, pager, next"
       :total="total"
       :current-page="page"
-      :page-size="10"
+      :page-size="pageSize"
     ></el-pagination>
   </div>
 </template>
 
 <script>
+import { getOneAuthorityList, getRoleList } from '@/api/manage';
 
 export default {
   name: 'AuthorityManage',
   data() {
     return {
-      inputValue1: '',
-      inputValue2: '',
-      value1: '',
-      value2: '',
+      inputName: '',
+      selectRoles: [],
+      changeRoles: [],
+      managerName: '',
       total: 20,
       page: 1,
-      addDialogVisible: false,
-      ManageDetDialogVisible: false,
+      pageSize: 10,
+      addManagerDialogVisible: false,
+      DetailRightDialogVisible: false,
       EditDialogVisible: false,
       deleteDialogVisible: false,
       addForm: {
-        username: '',
+        name: '',
         role: '',
       },
-      Detail: {},
-      editDetail: {},
-      options: [{
-        value: '选项1',
-        label: '课程运营',
-      }, {
-        value: '选项2',
-        label: '课程管理',
-      }, {
-        value: '选项3',
-        label: '后台管理',
+      Detail: {
+        name: '',
+        roleZh: '',
+        role: '',
+        right: '',
       },
-      {
-        value: '选项4',
-        label: '数据查看',
-      },
-      ],
-      dataList: [
-        {
-          nickname: 'alex',
-          name: 'root',
-          remark: '管理员',
-          userRoles: ['超级管理员'],
-        },
-        {
-          nickname: 'alex',
-          name: 'root',
-          remark: '管理员',
-          userRoles: ['超级管理员'],
-        },
-        {
-          nickname: 'alex',
-          name: 'root',
-          remark: '管理员',
-          userRoles: ['超级管理员'],
-        },
-      ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333,
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333,
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333,
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333,
-      },
-      ],
+      tableData: [],
+      options: [],
     };
   },
   created() {
-    this.getOne();
-    console.log('aaa');
+    this.getRoleOptions();
+    this.getTableList();
   },
   methods: {
-    async getOne() {
+    // 获得角色列表
+    async getRoleOptions() {
       console.log('aaa');
-      // const roleList = await getRoleList();
-      //  console.log(roleList);
+      this.options = await getRoleList();
+      console.log(this.options);
     },
+    // 根据姓名搜索
     handleName() {
-      this.$message(this.inputValue1);
-      this.inputValue1 = '';
+      console.log(this.inputName);
+      // 重新获取列表数据
+      this.getTableList();
     },
-    async showdetRightDialog(data) {
-      this.Detail = data;
-      this.ManageDetDialogVisible = true;
+    // 根据角色搜索
+    handleRoles() {
+      console.log(this.selectRoles);
+      // 重新获取列表数据
+      this.getTableList();
     },
-    async showEditRightDialog(row) {
-      this.editDetail = row;
+    // 重置页面
+    resetTableList() {
+      this.inputName = '';
+      this.selectRoles = '';
+      this.page = 1;
+      this.pageSize = 10;
+      // 重新获取列表数据
+      this.getTableList();
+    },
+    // 保存单独管理员的数据
+    setDetail(data) {
+      this.Detail.name = data.name;
+      this.Detail.roleZh = data.userRoles[0].roleInfo.nameZh;
+      this.Detail.role = data.userRoles[0].roleInfo.name;
+      this.Detail.right = data.userRoles[0].roleInfo.desc;
+    },
+    // 详情对话框
+    showDetailRightDialog(data1) {
+      this.setDetail(data1);
+      // this.Detail = data;
+      console.log(this.Detail);
+      this.DetailRightDialogVisible = true;
+    },
+    // 编辑对话框
+    showEditRightDialog(row) {
+      this.setDetail(row);
+      this.changeRoles = [this.Detail.role];
       this.EditDialogVisible = true;
     },
-    async showDeleteRightDialog() {
+    // 删除对话框
+    showDeleteRightDialog(val) {
+      console.log(val);
+      this.managerName = val.name;
       this.deleteDialogVisible = true;
     },
-    handleClick(row) {
-      console.log(row);
-      this.showdetRightDialog(row);
+    // 添加管理员对话框
+    showAddManagerDialog() {
+      this.addManagerDialogVisible = true;
     },
-    async showSetRightDialog() {
-      this.addDialogVisible = true;
+    // 改变管理员角色
+    changeMangerRoles(name) {
+      console.log(name);
+      console.log(this.changeRoles);
+      this.EditDialogVisible = false;
+      // 重新获取列表数据
+      this.getTableList();
+    },
+    // 删除管理员
+    deleteManager(name) {
+      console.log(name);
+      this.deleteDialogVisible = false;
+      // 重新获取列表数据
+      this.getTableList();
+    },
+    // 添加管理员
+    addManager() {
+      console.log(this.addForm);
+      this.addManagerDialogVisible = false;
+      // 重新获取列表数据
+      this.getTableList();
+    },
+    showRoles() {
+      console.log(this.selectRoles);
+    },
+    // 获取tabledata
+    async getTableList() {
+      const param = {
+        currentPage: this.page,
+        pageSize: this.pageSize,
+        nickname: this.inputName,
+        roleNames: this.selectRoles,
+      };
+      const {
+        currentPage, pageSize, nickname, roleNames,
+      } = param;
+      const res = await getOneAuthorityList({
+        currentPage, pageSize, nickname, roleNames,
+      });
+      this.tableData = res.rows;
+      console.log(res.rows);
+    },
+    // 页码改变事件
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      // 保存页码
+      this.page = val;
+      // 重新获取数据
+      this.getTableList();
     },
   },
 };
