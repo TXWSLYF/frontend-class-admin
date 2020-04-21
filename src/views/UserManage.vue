@@ -1,33 +1,32 @@
 <template>
-  <div class="user-manage" style='min-width:1280px'>
+  <div class="user-manage" >
     <p>用户管理</p>
     <div class="search-container">
       <div class="search-container_ID">
-        <el-autocomplete
-          placeholder="昵称、账号"
-          suffix-icon="el-icon-search"
-          v-model="state1"
-          :fetch-suggestions="querySearch"
-          @blur="handleSelect"
-          style="width:150px"
-        ></el-autocomplete>
+        <el-input
+          placeholder="昵称"
+          class="name_search"
+          @change="handleName"
+          v-model="inputName">
+           <i slot="suffix" class="el-input__icon el-icon-search" @click="handleName"></i>
+        </el-input>
       </div>
       <div class="search-container_time">
         <p>报名时间</p>
         <el-date-picker
-        el-date-picker
-        v-model="selectinfo"
-        type="daterange"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :default-time="['00:00:00', '23:59:59']"
-        style="width:250px"
+          el-date-picker
+          v-model="selectInfo"
+          type="daterange"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-time="['00:00:00', '23:59:59']"
+          style="width:260px"
         ></el-date-picker>
       </div>
       <div class="search-container_info">
         <p>报名情况</p>
         <el-select popper-class="search-container_info_select"
-        v-model="value1" multiple placeholder="请选择">
+          v-model="courseHashs" multiple placeholder="请选择">
           <el-option
             v-for="item in userNames"
             :key="item"
@@ -38,11 +37,17 @@
       </div>
       <div class="search-container_remark">
         <p>备注</p>
-        <el-input  placeholder="输入备注"></el-input>
+        <el-input
+          placeholder="输入备注"
+          class="inline-input"
+          @change="handleName"
+          v-model="remark">
+            <i slot="suffix" class="el-input__icon el-icon-search" @click="handleName"></i>
+        </el-input>
       </div>
       <div class="search-btn_container">
-        <el-button type="info">查询</el-button>
-        <el-button type="info">重置</el-button>
+        <el-button type="primary" @click="handleRoles">查询</el-button>
+        <el-button type="primary" @click="resetTableList">重置</el-button>
       </div>
     </div>
     <div class="user-info_container">
@@ -56,7 +61,7 @@
         <p>操作</p>
       </div>
       <div class="user-info_list-container">
-        <div class="user-info_list" v-for="(item, index) in userInfo.rows" :key="index">
+        <div class="user-info_list" v-for="(item, index) in data.rows" :key="index">
           <p class="user-info_list_nickname">{{ item.nickname }}</p>
           <p class="user-info_list_id">{{ item.name }}</p>
           <div class="user-info_list_info">
@@ -79,15 +84,15 @@
               type="text" @click="changeInfo">编辑</el-button>
 
             <el-dialog custom-class="user-info_operation_edit_top"
-            title="编辑学员信息" :center="true"
+            title="编辑学员信息" center
             :visible.sync="dialogFormVisible">
               <el-form :model="userInfo">
                 <el-form-item label="学员姓名" :label-width="formLabelWidth">
-                  <el-input v-model="userInfo.rows[0].id" autocomplete="off"
+                  <el-input v-model="data.rows[0].id" autocomplete="off"
                   :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="微信号" :label-width="formLabelWidth">
-                  <el-input v-model="userInfo.rows[0].name" autocomplete="off"
+                  <el-input v-model="data.rows[0].name" autocomplete="off"
                   :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="报名情况" :label-width="formLabelWidth">
@@ -102,15 +107,15 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item label="当前上课进度" :label-width="formLabelWidth" >
-                  <el-input v-model="userInfo.rows[0].userCourses[0].name"
+                  <el-input v-model="data.rows[0].userCourses[0].name"
                     autocomplete="off" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="当前作业进度" :label-width="formLabelWidth">
-                  <el-input v-model="userInfo.rows[0].userCourses[1].progress"
+                  <el-input v-model="data.rows[0].userCourses[1].progress"
                     autocomplete="off" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="备注" :label-width="formLabelWidth">
-                  <el-input v-model="userInfo.rows[0].remark" autocomplete="off"></el-input>
+                  <el-input v-model="data.rows[0].remark" autocomplete="off"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -130,9 +135,8 @@
           @size-change="handleSizeChange"
           :current-page="pageNumber"
           :page-size="pageSize"
-          :page-sizes="[1, 2, 3,]"
-          :total="5"
-        layout="total, sizes, prev, pager, next, jumper"
+          :tatal="tatal"
+          layout="prev, pager, next"
         ></el-pagination>
         <!-- <el-button icon="el-icon-arrow-right" plain></el-button> -->
       </div>
@@ -141,14 +145,22 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+// import { mapState, mapMutations } from 'vuex';
 import { usersInfo } from '@/api/userInfo';
 
 export default {
   name: 'UserManage',
   data() {
     return {
-      userInfo: {
+      inputName: '',
+      startTime: '',
+      endTime: '',
+      courseHashs: ['小白营', '初级营', 'Vue营'],
+
+      total: 20,
+      page: 1,
+      pageSize: 10,
+      data: {
         // usersInfo() {},
         count: 1, // 总条数
         rows: [
@@ -163,15 +175,15 @@ export default {
             // 用户报名的课程列表
             userCourses: [
               {
-                startAt: '2020-02-15', // 课程开始时间
-                createdAt: '2020-02-15', // 报名时间
+                startAt: '22020-02-15T16:00:00.000Z', // 课程开始时间
+                createdAt: '2020-02-15T11:40:56.000Z', // 报名时间
                 courseInfo: {
                   id: '1',
                   name: '前端小白训练营', // 课程名称
                 },
               },
               {
-                startAt: '2020-02-21',
+                startAt: '2020-02-21T16:00:00.000Z',
                 createdAt: '2020-02-21T12:44:38.000Z',
                 courseInfo: {
                   id: '2',
@@ -179,7 +191,7 @@ export default {
                 },
               },
               {
-                startAt: '2020-04-01',
+                startAt: '2020-04-01T16:00:00.000Z',
                 createdAt: '2020-04-01T12:24:37.000Z',
                 courseInfo: {
                   id: '3',
@@ -217,73 +229,69 @@ export default {
         currentPage: 1,
         pageSize: 10,
       },
-      userName: [{ name: 'a' }, { name: 'b' }, { name: 'c' }],
+      nickname: [{ value: 'hanhan' }, { value: 'xiaohei' }, { value: '用户2' }, { value: '用户1' }],
       state1: '',
-      userNames: ['小白营', '初级营', 'Vue营'],
-      selectinfo: '',
+      selectInfo: '',
       value1: [],
       value2: ['小白营', '初级营', 'Vue营'],
       dialogFormVisible: false,
       formLabelWidth: '120px',
+      remarks: [{ value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
+        { value: 'Hot honey 首尔炸鸡（仙霞路）', address: '上海市长宁区淞虹路661号' }],
+      remark: '',
     };
   },
 
-  computed: {
-    ...mapState({
-      pageNumber: (state) => state.pageNumber,
-      pageSize: (state) => state.pageSize,
-    }),
-  },
+  // computed: {
+  //   ...mapState({
+  //     pageNumber: (state) => state.pageNumber,
+  //     pageSize: (state) => state.pageSize,
+  //   }),
+  // },
 
   mounted() {
     usersInfo();
-    // .then((currentPage) => {
-    //   // post 成功，抄response.data 为返回的数据
-    //   console.log(currentPage.data);
-    //   // this.userName = currentPage.data;
-    // });
   },
   methods: {
-    ...mapMutations(['SET_PAGE']),
+    // 根据姓名搜索
+    handleName() {
+      console.log(this.inputName);
+      // 重新获取列表数据
+      this.userInfo();
+    },
+    // 根据备注搜索
+    handleRoles() {
+      console.log(this.selectRoles);
+      // 重新获取列表数据
+      // this.getTableList();
+    },
+
+    resetTableList() {
+      this.inputName = '';
+      this.selectRoles = '';
+      this.page = 1;
+      this.pageSize = 10;
+      // 重新获取列表数据
+      // this.getTableList();
+    },
 
     changeInfo() {
       this.dialogFormVisible = true;
     },
     deleteInfo() {},
 
-    // 1.更新分页参数
-    setPageNum(nextPage) {
-      const pageParams = {
-        pageNumber: nextPage,
-        pageSize: this.pageSize,
-      };
-      this.SET_PAGE(pageParams);
-    },
-    setPageSize(nextSize) {
-      const pageParams = {
-        pageNumber: this.pageNumber,
-        pageSize: nextSize,
-      };
-      this.SET_PAGE(pageParams);
-    },
-
-    // 2.获取分页数据
-    handleCurrentChange(currentPage) {
-      console.log(`当前页: ${currentPage}`);
-      this.setPageNum(currentPage);
-      // this.getDataApi(pageNumber,pageSize)
-    },
-    handleSizeChange(currentSize) {
-      console.log(`每页 ${currentSize} 条`);
-      this.setPageSize(currentSize);
-      // this.getDataApi(pageNumber,pageSize)
+    // 页码改变事件
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      // 保存页码
+      this.page = val;
+      // 重新获取数据
+      // this.getTableList();
     },
 
     querySearch(queryString, cb) {
-      const result = this.userName.filter((singleData) => {
-        if (singleData.name.indexOf(queryString) > -1) {
-          return true;
-        }
+      const result = this.nickname.filter((singleData) => {
+        if (singleData.value.indexOf(queryString) > -1) { return true; }
         return false;
       });
       cb(result);
