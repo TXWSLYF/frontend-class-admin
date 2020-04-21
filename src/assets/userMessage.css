@@ -1,8 +1,7 @@
 .user-manage {
-
+    /* width: 1280px; */
     height: 100%;
-    padding: 0;
-    margin: 0;
+    font-size: 14px;
     margin-left: 10px;
     color: #464646;
 }
@@ -10,7 +9,7 @@
 .search-container {
     height: 50px;
     background-color: white;
-    font-size: 15px;
+    /* font-size: 15px; */
     display: flex;
     justify-content: start;
     align-items: center;
@@ -19,6 +18,11 @@
 .search-container_ID {
     width: 150px;
     margin: 0 30px;
+}
+
+.search-btn_container {
+    min-width: 158px;
+    font-size: 0;
 }
 
 .search-container_time,
@@ -34,19 +38,29 @@
 }
 
 .search-container_remark {
-    width: 150px;
+    min-width: 150px;
     margin: 0 20px 0 0;
 }
 
-.search-container_time p{
+.search-container_time p {
     min-width: 65px;
     margin-right: 5px;
 }
+
 .search-container_info p {
     min-width: 65px;
     margin-right: 5px;
 }
 
+.search-container_info {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('')
+    no-repeat scroll right center transparent;
+    padding-right: 14px;
+}
+.search-container_info::-ms-expand { display: none; }
 .search-container_remark p {
     width: 45px;
     margin-right: 5px;
@@ -55,35 +69,23 @@
 .user-info_container {
     /* min-height: 720px; */
 
-    margin-right:10px;
+    margin-right: 10px;
     font-family: Microsoft YaHei;
 }
 
 .user-info_top-container {
     height: 40px;
-    background-color: #E3ECF7;
-    font-size: 18px;
-    list-style:none;
+    background-color: #e3ecf7;
+    margin: 15px 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
-.user-info_list>li,
-.user-info_top-container>li{
-    width: 180px;
-    margin-left:20px;
-}
-
-.user-info_list-container{
+.user-info_list-container {
     /* min-height:720px; */
-    overflow:auto;
-}
-.user-info_list{
-    height:120px;
-    margin:0;
-    background-color: white;
-    border-bottom: 1px solid #F5F8FC;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 /*定义了滚动条整体样式；*/
@@ -105,40 +107,76 @@
     /*滚动条里面轨道*/
     -webkit-box-shadow: inset 0 0 5px rgba(175, 163, 163, 0.8);
     border-radius: 5px;
-    background: #EDEDED;
+    background: #ededed;
 }
 
 .user-info_list-container::-webkit-scrollbar-thumb:hover {
     background: rgba(11, 77, 121, 0.8);
 }
 
-.user-info_top_info,
-.user-info_list_info{
-    min-width:250px !important;
-}
-.user-info_top_ID,
-.user-info_list_id{
-    width:100px !important;
-    margin-left:0px !important;
-}
 .user-info_list {
-    font-size: 18px;
-    height:100%;
-    font-size: 18px;
-    list-style:none;
+    /* font-size: 18px; */
+    height: 120px;
+    background-color: white;
+    border-bottom: 1px solid #f5f8fc;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
-.user-info_operation>p {
-    width: 60px;
-    color: #5090E5;
+.user-info_list>p,
+.user-info_list>div,
+.user-info_top-container>p,
+.user-info_top-container>div {
+    min-width: 100px;
+    /* margin:0 auto; */
+}
+
+.user-info_top_nickname,
+.user-info_list_nickname {
+    margin-left: 50px !important;
+}
+
+.user-info_top_info,
+.user-info_list_info {
+    min-width: 220px !important;
+    /* margin-left:25px; */
+}
+
+/* .user-info_top_ID,
+.user-info_list_id{
+    width:100px !important;
+    margin-left:0px !important;
+} */
+
+.user-info_operation {
+    width: 40px;
+    color: #409eff;
     display: inline-block;
 }
 
-.user-info_list div>p {
-    height: 10px;
+.user-info_operation_edit_top {
+    margin: 0 auto !important;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 10px;
+    background: #f7f7f7;
+    /* .el-dialog__header{  
+      background: #f7f7f7;
+      text-align: left;   
+      font-weight: 600;
+    } */
+}
+
+.user-info_operation_delete:hover {
+    color: rgb(98, 98, 98);
+    cursor: not-allowed;
+}
+
+.user-info_operation {
+    min-width: 100px;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* .user-info_operation_edit:hover{
@@ -146,8 +184,9 @@
     cursor: pointer;
 } */
 .user-info_pages {
-    height:50px;
-    display: flex ;
+    /* height:50px; */
+    text-align: center;
+    display: flex;
     justify-content: end;
     align-items: center;
 }
