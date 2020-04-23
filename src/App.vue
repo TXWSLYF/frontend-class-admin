@@ -33,7 +33,7 @@ export default {
 #app {
   > main {
     display: flex;
-    height: ~"calc(100vh - @{header-height})";
+    height: ~'calc(100vh - @{header-height})';
 
     .menu-container {
       width: @menu-width;
@@ -49,7 +49,8 @@ export default {
     }
 
     > .router-container {
-      width: ~"calc(100vw - @{menu-width})";
+      width: ~'calc(100vw - @{menu-width})';
+      background-color: #f5f8fc;
     }
   }
 }
