@@ -4,8 +4,23 @@
         <header>
           <h2 class="fontColor">课程评价</h2>
           <el-form>
-            <el-row :gutter="50">
-              <el-col :span="8">
+            <el-row :gutter="50" type="flex" justify="start">
+              <el-col :span="20" :xs="20" :sm="13" :md="12" :lg="11" :xl="5">
+                <!-- <div class="label-wrap">
+                  <label for="">时间段</label>
+                  <div class="wrap-content">
+                    <el-date-picker
+                      v-model="form.date"
+                      type="daterange"
+                      align="right"
+                      unlink-panels
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期"
+                      :picker-options="form.pickerOptions">
+                    </el-date-picker>
+                  </div>
+                </div> -->
                 <el-form-item label="时间段">
                   <div class="block">
                     <el-date-picker
@@ -50,7 +65,7 @@
               <el-button
                 size="mini"
                 type="text"
-                @click="classCommentsDetails(scope.row.hash)">查看详情</el-button>
+                @click="classCommentsDetails(scope.row)">查看详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -65,7 +80,7 @@
         </el-pagination>
 
         <!-- 查看详情弹窗 -->
-        <DialogComments :flag.sync="dialogInfoView" :paragraphHash="paragraphHash" title="小白营训练营"/>
+        <DialogComments :flag.sync="dialogInfoView" :paragraphHash="paragraphHash" :title="title"/>
       </main>
   </div>
 </template>
@@ -134,6 +149,7 @@ export default {
 
       // 查看详情弹窗
       dialogInfoView: false,
+      title: '',
       // 评论段落hash
       paragraphHash: '',
 
@@ -177,7 +193,7 @@ export default {
         endTime: this.form.date[1].getTime(),
       };
       courseComments(data).then((response) => {
-        console.log(response.rows);
+        // console.log(response.rows);
         // 更新数据
         this.tableData = response.rows;
         // 页面统计数据
@@ -191,10 +207,11 @@ export default {
     },
 
     // 课程评价详情
-    classCommentsDetails(hash) {
+    classCommentsDetails(data) {
       this.dialogInfoView = true;
-      this.paragraphHash = hash;
-      console.log(hash);
+      this.paragraphHash = data.hash;
+      this.title = `${data.classInfo.name}评价详情`;
+      // console.log(data);
     },
   },
 };
@@ -211,6 +228,20 @@ export default {
           padding-right: 20px;
         }
     }
+}
+
+.label-wrap {
+  // background: #000;
+  lable {
+    float: left;
+    line-height: 40px;
+    width: 50px;
+    background: red;
+  }
+  .wrap-content {
+    margin-left: 50px;
+    height: 40px;
+  }
 }
 
 .fontColor {

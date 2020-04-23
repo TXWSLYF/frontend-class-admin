@@ -78,7 +78,7 @@ export default {
         desc: this.form.roleName,
         authorities: this.form.authorities,
       };
-      console.log(data.authorities);
+      // console.log(data.authorities);
       if (!this.form.roleName) {
         this.$message.error('角色名称不能为空');
         return false;

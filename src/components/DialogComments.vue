@@ -93,7 +93,7 @@ export default {
       };
 
       courseCommDetails(data).then((response) => {
-        console.log(response);
+        // console.log(response);
         // 更新数据
         this.tableData = response.rows;
         // 页面统计数据
