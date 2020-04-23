@@ -2,58 +2,73 @@
     <div class="role-manage">
       <main>
         <header>
-          <h2>角色管理</h2>
+          <h2 class="fontColor">角色管理</h2>
           <el-button type="primary" @click="dialogInfo = true">新增角色</el-button>
         </header>
         <!-- 角色管理表格 -->
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="date" label="角色名称"></el-table-column>
-          <el-table-column prop="name" label="角色拥有者"></el-table-column>
-          <el-table-column prop="address" label="权限情况"></el-table-column>
-          <el-table-column label="操作" width="180">
-            <template slot-scope="">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%"
+          :default-sort = "{prop: 'nameZh', order: 'descending'}"
+          :header-cell-style="{background: '#e3ecf7', color: '#9c9c9c', fontWeight: '550'}">
+          <el-table-column prop="nameZh" label="角色名称"
+            :resizable="false" align="center" width="180"></el-table-column>
+          <el-table-column label="权限情况" :resizable="false" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span v-for="auth in scope.row.roleAuthorities" :key="auth.id">
+                {{auth.authorityInfo.nameZh}}、
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="180" :resizable="false">
+            <template slot-scope="scope">
               <el-button
                 size="mini"
                 type="text"
-                @click="dialogInfoView = true">详情</el-button>
+                @click="roleDetails(scope.row)">详情</el-button>
               <el-button
                 size="mini"
                 type="text"
-                @click="dialogInfoEdit = true">编辑</el-button>
+                @click="roleEdit(scope.row)">编辑</el-button>
               <el-button
                 size="mini"
                 type="text"
-                @click="deleteItem">删除</el-button>
+                @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
 
         <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
           background
-          layout="prev, pager, next"
-          :total="1000">
+          :page-sizes="[10, 20, 50]"
+          layout="total, sizes, prev, pager, next"
+          :total="count">
         </el-pagination>
 
         <!-- 新增角色弹窗 -->
-        <DialogInfo :flag.sync="dialogInfo" title="新增角色" :authorities="authorities"/>
+        <DialogNewRole :flag.sync="dialogInfo" title="新增角色" :authorities="authorities"/>
         <!-- 编辑角色弹窗 -->
-        <DialogInfoEdit :flag.sync="dialogInfoEdit" title="编辑角色" :authorities="authorities"/>
+        <DialogInfoEdit :flag.sync="dialogInfoEdit" title="编辑角色"
+          :authoritiy="authorities" :roleData="roleData"/>
         <!-- 查看角色弹窗 -->
-        <DialogInfoView :flag.sync="dialogInfoView" title="角色详情"/>
+        <DialogInfoView :flag.sync="dialogInfoView" title="角色详情" :roleData="roleData"/>
       </main>
     </div>
 </template>
 
 <script>
-import DialogInfo from '@/components/DialogInfo.vue';
+import DialogNewRole from '@/components/DialogNewRole.vue';
 import DialogInfoEdit from '@/components/DialogInfoEdit.vue';
 import DialogInfoView from '@/components/DialogInfoView.vue';
-import { roleList, authorityList } from '@/api/role';
+import { roleList, authorityList, deleteRole } from '@/api/role';
 
 export default {
   name: 'RoleManage',
   components: {
-    DialogInfo,
+    DialogNewRole,
     DialogInfoEdit,
     DialogInfoView,
   },
@@ -63,49 +78,46 @@ export default {
   },
   data() {
     return {
-      // 新增角色数据
-      title: '新增角色',
+      // 所有权限
       authorities: [],
       // 角色管理表格数据
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎11111111111111111111111111111111111111111111111111111111111111',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      tableData: [],
+      roleData: {},
+      // 分页
+      count: 0,
+      pageSize: 10,
+      pageNumber: 1,
+
+      // 弹窗控制
       dialogInfo: false,
       dialogInfoEdit: false,
       dialogInfoView: false,
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    // 每页显示条数
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getRoleList();
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+
+    // 当前页
+    handleCurrentChange(val) {
+      this.pageNumber = val;
+      this.getRoleList();
     },
 
     // 获取角色列表
     getRoleList() {
-      roleList().then((response) => {
-        console.log(response);
+      const data = {
+        currentPage: this.pageNumber,
+        pageSize: this.pageSize,
+      };
+      roleList(data).then((response) => {
+        // console.log(response);
+        this.tableData = response.rows;
+        // 绑定页面数据
+        this.count = response.count;
       }).catch((err) => err);
     },
 
@@ -115,23 +127,44 @@ export default {
         this.authorities = response;
       }).catch((err) => err);
     },
-    deleteItem() {
-      this.$confirm('是否确认删除该信息', '提示', {
+
+    // 查看角色详情
+    roleDetails(data) {
+      this.dialogInfoView = true;
+      this.roleData = data;
+    },
+
+    // 编辑角色
+    roleEdit(data) {
+      this.dialogInfoEdit = true;
+      this.roleData = data;
+    },
+
+    // 删除
+    deleteItem(data) {
+      console.log(data);
+      this.$confirm(`确认要删除角色:${data.name}嘛?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'info',
         center: true,
       }).then(() => {
-        // 删除的方法
-        this.$message({
-          type: 'success',
-          message: '删除成功!',
+        const name = {
+          roleName: data.name,
+        };
+        // console.log(name);
+        deleteRole(name).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          });
+          this.getRoleList();
+        }).catch((err) => {
+          this.$message({
+            type: 'error',
+            message: err,
+          });
         });
       }).catch(() => {
-        // this.$message({
-        //   type: 'info',
-        //   message: '已取消删除',
-        // });
       });
     },
   },
@@ -152,11 +185,11 @@ export default {
     }
 }
 
-// element-ui样式改变
-// .el-select {
-//   display: block;
-// }
+.fontColor {
+  color: #7c7d7e;
+}
 
+// element-ui样式改变
 .el-pagination {
   float: right;
 }
