@@ -31,6 +31,7 @@ export default {
 @menu-width: 160px;
 
 #app {
+  background-color: #f5f8fc;
   > main {
     display: flex;
     height: ~"calc(100vh - @{header-height})";
