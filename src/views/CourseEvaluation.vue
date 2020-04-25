@@ -247,4 +247,40 @@ export default {
 .fontColor {
   color: #7c7d7e;
 }
+.authority-manage_title{
+  margin: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.authority-manage_button{
+  border-radius: 10px;
+  margin: 5px 20px 5px;
+}
+.authority-manage_search{
+  background-color: white;
+  margin: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.name_search{
+  margin: 5px 20px;
+  width: 150px;
+}
+.role{
+  margin: 5px 0 5px 20px;
+}
+.roles_search{
+  margin: 5px;
+  width: 400px;
+}
+.pointer{
+  cursor: pointer;
+}
+.pagination{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 </style>
