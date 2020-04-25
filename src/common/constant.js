@@ -16,7 +16,7 @@ export const userRole = {
 export const menuList = [
   {
     title: '管理',
-    icon: 'el-icon-location',
+    icon: 'el-icon-setting',
     children: [
       {
         title: '用户管理',
@@ -34,7 +34,7 @@ export const menuList = [
   },
   {
     title: '数据分析',
-    icon: 'el-icon-location',
+    icon: 'el-icon-picture-outline-round',
     children: [
       {
         title: '课程评价',
