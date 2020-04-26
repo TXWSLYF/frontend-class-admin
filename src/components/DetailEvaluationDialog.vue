@@ -64,9 +64,6 @@ export default {
       handler(newValue) {
         this.detailEvalDialogFlag = newValue;
         this.total = this.dialogCount;
-        console.log(this.dialogCount);
-        console.log(this.value);
-        console.log(newValue);
       },
     },
   },
@@ -87,7 +84,6 @@ export default {
     },
     // 页码改变事件
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       // 保存页码
       this.page = val;
       // 重新获取数据

@@ -114,7 +114,6 @@ export default {
         pageSize: this.pageSize,
       };
       roleList(data).then((response) => {
-        // console.log(response);
         this.tableData = response.rows;
         // 绑定页面数据
         this.count = response.count;
@@ -142,7 +141,6 @@ export default {
 
     // 删除
     deleteItem(data) {
-      console.log(data);
       this.$confirm(`确认要删除角色:${data.name}嘛?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -151,7 +149,6 @@ export default {
         const name = {
           roleName: data.name,
         };
-        // console.log(name);
         deleteRole(name).then(() => {
           this.$message({
             type: 'success',

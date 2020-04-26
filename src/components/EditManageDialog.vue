@@ -53,10 +53,6 @@ export default {
       handler(newValue) {
         this.editDialog = newValue;
         this.changeR = this.changeRoles;
-        console.log(this.value);
-        console.log(this.changeRoles);
-        console.log(this.changeR);
-        console.log(newValue);
       },
     },
   },

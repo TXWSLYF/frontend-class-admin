@@ -56,7 +56,6 @@ export default {
       handler(newValue) {
         this.editDialog = newValue;
         this.addRole = this.addForm;
-        console.log(newValue);
       },
     },
   },

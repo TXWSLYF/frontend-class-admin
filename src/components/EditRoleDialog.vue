@@ -53,10 +53,6 @@ export default {
       handler(newValue) {
         this.editDialog = newValue;
         this.changeR = this.changeRight;
-        console.log(this.value);
-        console.log(this.changeRight);
-        console.log(this.changeR);
-        console.log(newValue);
       },
     },
   },
@@ -75,7 +71,6 @@ export default {
     },
     handleEdit() {
       this.$emit('edit', this.changeR);
-      console.log('aaaaaaaaaaaaaaaaaa');
     },
   },
 };

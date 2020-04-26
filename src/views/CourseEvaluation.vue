@@ -107,8 +107,6 @@ export default {
                 const end = new Date();
                 const start = new Date();
                 start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                console.log(end);
-                console.log(start);
                 picker.$emit('pick', [start, end]);
               },
             },
@@ -193,7 +191,6 @@ export default {
         endTime: this.form.date[1].getTime(),
       };
       courseComments(data).then((response) => {
-        // console.log(response.rows);
         // 更新数据
         this.tableData = response.rows;
         // 页面统计数据
@@ -211,7 +208,6 @@ export default {
       this.dialogInfoView = true;
       this.paragraphHash = data.hash;
       this.title = `${data.classInfo.name}评价详情`;
-      // console.log(data);
     },
   },
 };

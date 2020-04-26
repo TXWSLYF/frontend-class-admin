@@ -78,13 +78,11 @@ export default {
         desc: this.form.roleName,
         authorities: this.form.authorities,
       };
-      // console.log(data.authorities);
       if (!this.form.roleName) {
         this.$message.error('角色名称不能为空');
         return false;
       }
       this.submitLoading = true;
-      // console.log(data);
       newRole(data).then(() => {
         this.$message({
           message: '添加成功',

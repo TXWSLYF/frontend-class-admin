@@ -85,7 +85,6 @@ export default {
         this.form.authorities[i] = this.roleData.roleAuthorities[i].authorityInfo.name;
       }
       this.auth = this.form.authorities;
-      // console.log(this.auth);
     },
 
     // 修改角色权限

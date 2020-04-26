@@ -172,19 +172,15 @@ export default {
   methods: {
     // 获得角色列表
     async getRoleOptions() {
-      console.log('aaa');
       this.options = await getRoleList();
-      console.log(this.options);
     },
     // 根据姓名搜索
     handleName() {
-      console.log(this.inputName);
       // 重新获取列表数据
       this.getTableList();
     },
     // 根据角色搜索
     handleRoles() {
-      console.log(this.selectRoles);
       // 重新获取列表数据
       this.getTableList();
     },
@@ -202,7 +198,6 @@ export default {
       let theRight = [];
       const roleZh = [];
       const allRight = [];
-      console.log(data);
       this.detail.name = data.name;
       // 遍历管理员的所有角色
       for (let i = 0; i < data.userRoles.length; i += 1) {
@@ -223,7 +218,6 @@ export default {
     },
     // 清空本条的detail数据
     clearDetail() {
-      console.log('aaaaaaaa');
       this.detail.name = '';
       this.detail.roleZh = '';
       this.detail.role = [];
@@ -231,7 +225,6 @@ export default {
     },
     // 详情对话框
     showDetailRightDialog(data1) {
-      console.log(data1);
       this.setDetail(data1);
       this.detailRightDialogVisible = true;
     },
@@ -248,7 +241,6 @@ export default {
     },
     // 改变管理员角色
     changeMangerRoles(data) {
-      console.log(data);
       this.editDialogVisible = false;
       // 发送修改管理员角色请求
       const userName = this.detail.name;
@@ -286,11 +278,9 @@ export default {
       });
       this.tableData = res.rows;
       this.total = res.count;
-      console.log(res);
     },
     // 页码改变事件
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       // 保存页码
       this.page = val;
       // 重新获取数据

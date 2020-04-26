@@ -30,8 +30,6 @@ export default {
     flag: {
       handler(newValue) {
         this.deleteDialogFlag = newValue;
-        console.log(this.value);
-        console.log(newValue);
       },
     },
   },

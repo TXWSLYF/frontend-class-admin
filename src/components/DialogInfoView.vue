@@ -63,7 +63,6 @@ export default {
     },
 
     infoDetails() {
-      // console.log(this.roleData);
       this.roleName = this.roleData.nameZh;
 
       // for (const auth of this.roleData.roleAuthorities) {

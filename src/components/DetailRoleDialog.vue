@@ -34,8 +34,6 @@ export default {
     flag: {
       handler(newValue) {
         this.detailRoleDialogFlag = newValue;
-        console.log(this.value);
-        console.log(newValue);
       },
     },
   },
