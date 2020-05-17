@@ -7,7 +7,7 @@ import router from '@/router/index';
 const { USER_NOT_LOGIN } = errorCodeType;
 
 const fetch = axios.create({
-  baseURL: '/api/admin',
+  baseURL: '/api',
   withCredentials: true,
   timeout: 20000,
   headers: {

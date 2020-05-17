@@ -44,7 +44,14 @@
         :data="tableData"
         style="width: 100%">
         <el-table-column
-          label="管理员姓名"
+          label="管理员昵称"
+          width="200">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.nickname }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="管理员账号"
           width="200">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.name }}</span>

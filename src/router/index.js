@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 // eslint-disable-next-line import/no-cycle
-import { getUserInfo } from '@/api/user';
+import { getCurUserInfo } from '@/api/user';
 import store from '@/store/index';
 
 Vue.use(VueRouter);
@@ -47,7 +47,7 @@ router.beforeEach(async (to, from, next) => {
   const { isLogin } = store.state.userInfo;
   // 未登录跳转登录页
   if (to.path !== '/login' && !isLogin) {
-    const userInfo = await getUserInfo();
+    const userInfo = await getCurUserInfo();
     store.commit('setUserInfo', { isLogin: true, ...userInfo });
     next();
   } else {

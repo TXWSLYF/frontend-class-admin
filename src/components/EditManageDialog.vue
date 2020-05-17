@@ -6,7 +6,7 @@
       @close="close"
        width="50%">
        <el-form :model="value"  ref="editFormRef" label-width="100px">
-          <el-form-item label="管理员姓名">
+          <el-form-item label="管理员账号">
             <el-input v-model="value.name" disabled></el-input>
           </el-form-item>
         <el-form-item label="管理员角色">
