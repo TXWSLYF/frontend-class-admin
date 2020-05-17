@@ -59,16 +59,13 @@ export default {
     init() {
       this.dialogVisible = true;
       this.$nextTick(() => {
-        console.log(this.data);
         this.form.nickname = this.data.nickname;
         this.form.name = this.data.name;
         this.form.signDesc = this.data.signDesc;
         this.form.remark = this.data.remark;
       });
-      console.log(this.data);
     },
     async save() {
-      console.log(this.form);
       await updateUserInfo({
         name: this.form.name,
         nickname: this.form.nickname,

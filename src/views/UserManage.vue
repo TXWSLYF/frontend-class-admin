@@ -120,7 +120,6 @@ export default {
   },
   methods: {
     handleChange() {
-      console.log(this.searchFormData);
     },
     handleRowData(data) {
       this.curRowData = data;
