@@ -66,6 +66,15 @@
           )
           template(slot-scope="scope")
             el-button(@click="handleRowData(scope.row)" type="text" size="small") 编辑
+    el-pagination.pagenation(
+      background
+      :page-size="pageSize"
+      :current-page="currentPage"
+      layout="prev, pager, next"
+      @current-change="handlePageChange"
+      @prev-click="handlePageChange"
+      @next-click="handlePageChange"
+      :total="total")
     UserManageModal(:data="curRowData" ref="infoModal" :signArray="signArray" @save="handleSave")
 
 </template>
@@ -104,6 +113,7 @@ export default {
         signDesc: [],
       },
       tableData: [],
+      total: 0,
       pageSize: 20,
       currentPage: 1,
     };
@@ -138,7 +148,12 @@ export default {
 
       getUserInfo(data).then((res) => {
         this.tableData = this.userDataTransform(res.rows);
+        this.total = res.count;
       });
+    },
+    handlePageChange(page) {
+      this.currentPage = page;
+      this.query();
     },
     clearData() {
       this.searchFormData = {
@@ -187,6 +202,7 @@ export default {
         value: course.hash,
       }));
     });
+    this.currentPage = 1;
     this.query();
   },
 };
@@ -199,6 +215,10 @@ export default {
   .search-top-bar {
     width: 100%;
     margin: 10px;
+  }
+  .pagenation{
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
