@@ -43,7 +43,8 @@
           label="报名情况"
           )
           template(slot-scope="scope")
-            el-tag(v-for="item in scope.row.signDesc" :key="item.value") {{item.label}}
+            el-tag(v-for="item in scope.row.signDesc"
+            :key="item.value") {{item.label+':'+ item.time.toLocaleString()}}
         el-table-column(
           prop="class_progress"
           label="当前上课进度"
@@ -173,7 +174,11 @@ export default {
         obj.name = userInfo.name;
         obj.remark = userInfo.remark;
         obj.signDesc = userInfo.userCourses
-          .map((course) => ({ label: course.courseInfo.name, value: course.courseInfo.hash }));
+          .map((course) => ({
+            label: course.courseInfo.name,
+            value: course.courseInfo.hash,
+            time: new Date(course.createdAt),
+          }));
         const classList = userInfo.userClasses.filter((ele) => ele.classInfo.type === 1);
         const homeworkList = userInfo.userClasses.filter((ele) => ele.classInfo.type === 2);
         obj.class_progress = classList[0] || {
