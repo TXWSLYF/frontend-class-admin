@@ -33,10 +33,12 @@
         el-table-column(
           prop="nickname"
           label="学员昵称"
+          width="110"
           )
         el-table-column(
           prop="name"
           label="学员账号"
+          width="110"
           )
         el-table-column(
           prop="signDesc"
@@ -48,12 +50,14 @@
         el-table-column(
           prop="class_progress"
           label="当前上课进度"
+          width="190"
           )
           template(slot-scope="scope")
             div {{`${scope.row.class_progress.classInfo.name}:${scope.row.class_progress.progress}%`}}
         el-table-column(
           prop="homework_progress"
           label="当前作业进度"
+          width="190"
           )
           template(slot-scope="scope")
             div {{`${scope.row.class_progress.classInfo.name}:${scope.row.class_progress.progress}%`}}
@@ -64,6 +68,7 @@
         el-table-column(
           prop="operate"
           label="操作"
+          width="110"
           )
           template(slot-scope="scope")
             el-button(@click="handleRowData(scope.row)" type="text" size="small") 编辑
