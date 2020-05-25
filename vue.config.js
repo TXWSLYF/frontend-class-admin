@@ -16,7 +16,7 @@ module.exports = {
     before: mocks,
     proxy: {
       '/api': {
-        target: 'http://test.admin.xhxly.cn:7002/',
+        target: 'http://localhost:7001/',
         pathRewrite: { '^/api': '' },
       },
     },

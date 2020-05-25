@@ -43,3 +43,31 @@ export const menuList = [
     ],
   },
 ];
+
+// 用户优惠券状态
+export const USER_COUPON_STATUSES = {
+  UN_USED: {
+    name: '未使用',
+    value: 0,
+  },
+  USED: {
+    name: '已使用',
+    value: 1,
+  },
+  EXPIRED: {
+    name: '已过期',
+    value: -1,
+  },
+};
+
+// 获取优惠券状态名称
+export function getCouponStatusName(status) {
+  const keys = Object.keys(USER_COUPON_STATUSES);
+
+  for (let i = 0; i < keys.length; i += 1) {
+    if (USER_COUPON_STATUSES[keys[i]].value === status) {
+      return USER_COUPON_STATUSES[keys[i]].name;
+    }
+  }
+  return null;
+}
